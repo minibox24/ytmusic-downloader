@@ -7,11 +7,26 @@ interface AppProps {}
 
 const BASE_URL = "http://localhost:8000";
 
+const YOUTUBE_REGEX =
+  /(youtu.*be.*)\/(watch\?v=|embed\/|v|shorts|)(.*?((?=[&#?])|$))/;
+
 const App: FC<AppProps> = () => {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState<string>("");
   const [tracks, setTracks] = useState<ITrack[]>([]);
 
   const search = async () => {
+    if (!query) return;
+
+    if (YOUTUBE_REGEX.test(query)) {
+      const id = query.match(YOUTUBE_REGEX)?.[3];
+
+      const res = await fetch(`${BASE_URL}/track/${id}`);
+      const data = await res.json();
+
+      setTracks([data]);
+      return;
+    }
+
     const res = await fetch(`${BASE_URL}/search?query=${query}`);
     const data = await res.json();
 
