@@ -1,0 +1,8 @@
+aiohttp
+eyed3
+python-ffmpeg
+yt-dlp
+ytmusicapi
+
+sanic==21.12.2
+sanic-cors==2.2.0
