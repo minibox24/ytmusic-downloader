@@ -9,6 +9,7 @@ import eyed3
 import ffmpeg
 from sanic import Request, Sanic
 from sanic.response import file, json
+from sanic_cors import CORS
 from yt_dlp import YoutubeDL
 from ytmusicapi import YTMusic
 
@@ -16,6 +17,8 @@ app = Sanic(__name__)
 ytmusic = YTMusic("headers_auth.json")
 
 app.ctx.downloads = {}
+
+CORS(app)
 
 # region functions
 
